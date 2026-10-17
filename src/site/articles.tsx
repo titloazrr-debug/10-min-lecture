@@ -49,7 +49,7 @@ export function ReprendreArticle() {
         <li><strong>Va vers le court et le prenant.</strong> Une nouvelle, un polar, une BD, un roman léger. Le but, c’est de retrouver la sensation de <em>vouloir</em> tourner la page.</li>
         <li><strong>Demande autour de toi.</strong> Le libraire, la bibliothèque, une amie qui lit. « Qu’est-ce que tu as lu que tu n’arrivais pas à lâcher ? » est une excellente question.</li>
       </ul>
-      <p>On sait, de façon générale, que lire régulièrement, même un peu, aide à garder le plaisir de lire et la concentration [source à ajouter]. Pas besoin de chiffres pour le vérifier sur toi : essaie une semaine.</p>
+      <p>Pas besoin de chiffres pour le vérifier sur toi : essaie une semaine.</p>
 
       <h2>Un petit outil pour t’aider</h2>
       <p>J’ai créé <strong>10 min lecture</strong> pour rendre la reprise plus simple. Tu ajoutes ton livre et ta page, tu lances 10 minutes, tu poses ton téléphone. À la fin, tu notes ta page et, si tu veux, une phrase à retenir. Pas de compte, pas de pub : tes lectures restent sur ton appareil.</p>
@@ -92,16 +92,17 @@ export function ScrollArticle() {
             <p>Garde le livre accessible. Pas tout au fond, sous tes affaires.</p>
           </div>
         </div>
+        <p className="scene-try"><a href="/app" onClick={() => track("cta_click", { placement: "article-scroll-mid" })}>Et si tu essayais avec ton livre ?</a></p>
       </section>
 
       <aside className="scene-aside">
-        <img src="/situations/attente.jpg" width={1122} height={1402} alt="En salle d’attente, de 14 h 02 à 14 h 29 : le livre est sur les genoux. « Tu avais apporté ton livre pour ça. »" />
         <div>
           <p className="kicker">En salle d’attente</p>
           <h2>Tu avais justement apporté ton livre pour ça.</h2>
           <p>Le rendez-vous est en retard. Le réflexe est d’ouvrir le téléphone, alors qu’il reste peut-être un quart d’heure.</p>
           <p>Dès que tu t’assieds, ouvre ton livre avant les notifications.</p>
         </div>
+        <img src="/situations/attente.jpg" width={1122} height={1402} alt="En salle d’attente, de 14 h 02 à 14 h 29 : le livre est sur les genoux. « Tu avais apporté ton livre pour ça. »" />
       </aside>
 
       <section>
@@ -109,7 +110,6 @@ export function ScrollArticle() {
         <h2>Le fameux « encore une vidéo »</h2>
         <p>On devait se coucher tôt. Mais la vidéo suivante démarre, puis encore une autre.</p>
         <p>Essaie quelques pages avant de toucher au téléphone. Et si la fatigue est déjà là, mieux vaut dormir que se forcer à lire.</p>
-        <p>On parle beaucoup des écrans le soir et du sommeil. Je ne mets pas de chiffre à la place d’une étude : [source à ajouter].</p>
         <img className="scene-wide" src="/situations/lit.jpg" width={1122} height={1402} alt="Dans un lit, de 22 h 31 à 23 h 48 : le téléphone reste allumé, le livre fermé sur la table de nuit. « Tu voulais dormir plus tôt. »" />
       </section>
 
