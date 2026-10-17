@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { ReprendreArticle, ScrollArticle } from "./articles.tsx"
-import { SituationGallery } from "./situations.tsx"
 import { track, visitSource } from "../lib/track.ts"
 import { DATA_KEY, LEGACY_KEY, rememberChallenge } from "../storage.ts"
 import { libraryPresent } from "./paths.ts"
@@ -109,11 +108,6 @@ function HomePage() {
         <p className="hint">Pour tes livres papier · sans compte · tes lectures restent sur cet appareil</p>
       </section>
       <section className="home-block">
-        <h2>Le livre était déjà là</h2>
-        <p>Dans le lit, sur le canapé, dans le bus, en salle d’attente.</p>
-        <SituationGallery />
-      </section>
-      <section className="home-block">
         <h2>Qu’est-ce qui t’empêche de lire ?</h2>
         <div className="door-list">
           {doors.map((door) => (
@@ -146,6 +140,13 @@ function HomePage() {
           <p>J’ai des livres plein les étagères, et l’envie de les lire. Pourtant, le soir, je finissais souvent sur mon téléphone, avec un petit regret. Je ne voulais pas me faire la morale. Je voulais juste que mon livre soit aussi facile à ouvrir que l’appli. Alors j’ai fait 10 min lecture.</p>
           <footer>— Tim</footer>
         </blockquote>
+      </section>
+      <section className="home-block">
+        <h2>Sur le canapé, cinq minutes</h2>
+        <a href="/lire-au-lieu-de-scroller" onClick={() => track("cta_click", { placement: "home-scene" })}>
+          <img className="home-scene" src="/situations/canape.jpg" width={1122} height={1402} alt="Sur un canapé, de 21 h 00 à 22 h 17, le livre reste fermé pendant que le téléphone reste allumé." />
+        </a>
+        <p><a href="/lire-au-lieu-de-scroller">Le canapé, le trajet, la salle d’attente, le soir.</a></p>
       </section>
       <p className="footer-note">Tes lectures restent sur cet appareil. Pas de compte, pas de pub. · <a href="/confidentialite">Confidentialité</a> · Fait par Tim</p>
     </main>

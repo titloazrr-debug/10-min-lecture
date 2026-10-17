@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { track } from "../lib/track.ts"
-import { SituationGallery } from "./situations.tsx"
+
 
 const ORIGIN = "https://10-min-lecture.vercel.app"
 const PHOTO = "/fond-lecture.jpg"
@@ -66,23 +66,52 @@ export function ScrollArticle() {
       <h1>Je scrolle au lieu de lire</h1>
       <p>Le livre est là, sur la table de nuit. Tu voulais en lire quelques pages. Puis le téléphone est dans la main, et le soir s’en va.</p>
       <p>Ça arrive à tout le monde. Le téléphone ne demande rien pour démarrer. Le livre, si : retrouver la page, se rappeler l’histoire, rester un moment. Le soir, on prend souvent ce qui s’ouvre tout seul.</p>
-      <SituationGallery />
+
+      <section>
+        <p className="kicker">Le canapé</p>
+        <h2>« Je regarde juste cinq minutes… »</h2>
+        <p>C’est souvent là que tout commence. On s’installe, on prend le téléphone sans vraiment y penser. Quand on relève les yeux, la soirée a bien avancé.</p>
+        <p>Pose ton livre à l’endroit où tu attrapes habituellement ton téléphone. Et commence par deux pages.</p>
+        <img className="scene-wide" src="/situations/canape.jpg" width={1122} height={1402} alt="Sur un canapé, de 21 h 00 à 22 h 17 : le livre est toujours fermé. « Et si tu commençais par ton livre ? »" />
+      </section>
 
       <h2>Ce que j’ai vécu</h2>
       <p>Le soir, je finissais souvent sur mon téléphone, avec un petit regret. Autour de moi, beaucoup me racontaient la même chose.</p>
       <p>Je ne voulais pas me faire la morale. Je voulais seulement changer l’ordre : le livre d’abord, dix minutes, et le téléphone ensuite s’il reste de la place.</p>
+      <p><strong>Le téléphone est déjà allumé.</strong> Un coup d’œil à l’heure, un message, et la soirée bascule. Le livre attend encore qu’on le prenne. Il ne demande pas de s’y remettre : pas de page à chercher, pas de « qui est qui ».</p>
 
-      <h2>Pourquoi le téléphone gagne</h2>
-      <p><strong>Il est déjà allumé.</strong> Un coup d’œil à l’heure, un message, et la soirée bascule. Le livre attend encore qu’on le prenne.</p>
-      <p><strong>Il ne demande pas de s’y remettre.</strong> Pas de page à chercher, pas de « qui est qui ». Le livre, lui, reprend là où on l’a laissé, et ce petit effort suffit parfois à le refermer.</p>
-      <p>On parle beaucoup des écrans le soir et du sommeil. Je ne mets pas de chiffre à la place d’une étude : [source à ajouter].</p>
+      <section>
+        <p className="kicker">Dans les transports</p>
+        <h2>Ton prochain chapitre se cache peut-être entre deux arrêts.</h2>
+        <p>Dans le bus, il y a toujours ce petit moment où l’on sort son téléphone presque sans y penser. On regarde les messages, on fait défiler quelques vidéos, puis on arrive.</p>
+        <div className="scene-split">
+          <img src="/situations/transport.jpg" width={1122} height={1402} alt="Dans un bus, de 08 h 07 à 08 h 34 : le livre reste dans le sac. « Ce trajet pouvait être quelques pages. »" />
+          <div>
+            <p>Avec un livre dans le sac, vingt minutes suffisent parfois pour avancer d’un chapitre. Pas besoin de se fixer un objectif. Juste ouvrir le livre au lieu de l’appli habituelle.</p>
+            <p>Et si tu dois descendre au milieu d’une scène ? Tant mieux. Tu auras envie de reprendre au prochain trajet.</p>
+            <p>Garde le livre accessible. Pas tout au fond, sous tes affaires.</p>
+          </div>
+        </div>
+      </section>
 
-      <h2>Changer l’ordre, pas la soirée</h2>
-      <ol>
-        <li><strong>Pose le livre là où ta main va.</strong> Sur l’oreiller, sur l’accoudoir. Celui qu’on voit en premier a une chance.</li>
-        <li><strong>Retourne le téléphone, ou laisse-le un peu plus loin.</strong> Dix minutes. Pas toute la nuit.</li>
-        <li><strong>Note ta page en refermant.</strong> Et, si tu veux, une phrase à retenir. Demain, tu ne repars pas de zéro.</li>
-      </ol>
+      <aside className="scene-aside">
+        <img src="/situations/attente.jpg" width={1122} height={1402} alt="En salle d’attente, de 14 h 02 à 14 h 29 : le livre est sur les genoux. « Tu avais apporté ton livre pour ça. »" />
+        <div>
+          <p className="kicker">En salle d’attente</p>
+          <h2>Tu avais justement apporté ton livre pour ça.</h2>
+          <p>Le rendez-vous est en retard. Le réflexe est d’ouvrir le téléphone, alors qu’il reste peut-être un quart d’heure.</p>
+          <p>Dès que tu t’assieds, ouvre ton livre avant les notifications.</p>
+        </div>
+      </aside>
+
+      <section>
+        <p className="kicker">Avant de dormir</p>
+        <h2>Le fameux « encore une vidéo »</h2>
+        <p>On devait se coucher tôt. Mais la vidéo suivante démarre, puis encore une autre.</p>
+        <p>Essaie quelques pages avant de toucher au téléphone. Et si la fatigue est déjà là, mieux vaut dormir que se forcer à lire.</p>
+        <p>On parle beaucoup des écrans le soir et du sommeil. Je ne mets pas de chiffre à la place d’une étude : [source à ajouter].</p>
+        <img className="scene-wide" src="/situations/lit.jpg" width={1122} height={1402} alt="Dans un lit, de 22 h 31 à 23 h 48 : le téléphone reste allumé, le livre fermé sur la table de nuit. « Tu voulais dormir plus tôt. »" />
+      </section>
 
       <h2>Un minuteur, une page, une phrase</h2>
       <p>J’ai fait <strong>10 min lecture</strong> pour ce geste. C’est un minuteur. Tu notes ta page. Tu peux garder une note, ou une phrase à retenir. Pas de compte : tes lectures restent sur ton appareil.</p>
