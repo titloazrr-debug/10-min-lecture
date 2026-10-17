@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://10-min-lecture.vercel.app/sitemap.xml

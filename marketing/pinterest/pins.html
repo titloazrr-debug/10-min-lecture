@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <style>
+    @font-face {
+      font-family: "Georgia Local";
+      src: url("file:///System/Library/Fonts/Supplemental/Georgia.ttf");
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #111; }
+    .pin {
+      width: 1000px;
+      height: 1500px;
+      overflow: hidden;
+      background: #efe6d8;
+      color: #241f1b;
+      font-family: "Georgia Local", Georgia, serif;
+    }
+    .quote {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 96px 80px 80px;
+    }
+    .kicker {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      font-size: 28px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #2f5d4a;
+    }
+    .quote h1 {
+      margin: 0;
+      font-size: 92px;
+      font-weight: 500;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+    }
+    .quote footer, .list footer {
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      font-size: 32px;
+      color: #5e564e;
+    }
+    .list { padding: 80px 72px 64px; display: flex; flex-direction: column; }
+    .list h1 {
+      margin: 12px 0 36px;
+      font-size: 68px;
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+    ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 22px; }
+    li {
+      display: flex;
+      gap: 22px;
+      align-items: baseline;
+      font-size: 36px;
+      line-height: 1.25;
+    }
+    li span {
+      flex: 0 0 48px;
+      color: #2f5d4a;
+      font-size: 34px;
+    }
+    .list footer { margin-top: auto; padding-top: 36px; }
+    .photo { position: relative; background: #efe6d8; }
+    .photo img { width: 1000px; height: 1160px; object-fit: cover; object-position: center 70%; display: block; }
+    .band { height: 340px; padding: 36px 72px 0; }
+    .band h1 { margin: 8px 0 0; font-size: 64px; font-weight: 500; line-height: 1.12; letter-spacing: -0.03em; }
+  </style>
+</head>
+<body>
+  <section class="pin quote" id="citation">
+    <p class="kicker">10 min lecture</p>
+    <h1>10 minutes, c’est déjà lire.</h1>
+    <footer>Pour tes livres papier.</footer>
+  </section>
+  <section class="pin list" id="idees">
+    <p class="kicker">10 min lecture</p>
+    <h1>7 idées pour te remettre à lire</h1>
+    <ol>
+      <li><span>1</span>Pense en minutes, pas en livres.</li>
+      <li><span>2</span>Reprends là où tu t’es arrêté.</li>
+      <li><span>3</span>Note ta page, et une phrase.</li>
+      <li><span>4</span>Rends le livre visible.</li>
+      <li><span>5</span>Choisis un livre qui te fait envie maintenant.</li>
+      <li><span>6</span>Accepte les petites lectures.</li>
+      <li><span>7</span>Garde un moment à toi, même court.</li>
+    </ol>
+    <footer>Sans compte. Sur ton appareil.</footer>
+  </section>
+  <section class="pin photo" id="lampe">
+    <img src="file:///Users/thierryloiseau/10-min-lecture/public/fond-lecture.jpg" alt="">
+    <div class="band">
+      <p class="kicker">10 min lecture</p>
+      <h1>Le livre d’abord. Dix minutes.</h1>
+    </div>
+  </section>
+</body>
+</html>
