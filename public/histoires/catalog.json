@@ -8,7 +8,7 @@
     "chapterCount": 10,
     "status": "completed",
     "genre": "Satire post-apo",
-    "cover": ""
+    "cover": "cover.jpg"
   },
   {
     "slug": "abel-doit-nuire",
@@ -19,7 +19,7 @@
     "chapterCount": 13,
     "status": "completed",
     "genre": "Fable de l'audit",
-    "cover": ""
+    "cover": "cover.jpg"
   },
   {
     "slug": "lodyssee-fiscale",
@@ -30,17 +30,17 @@
     "chapterCount": 13,
     "status": "completed",
     "genre": "Parodie mythologique",
-    "cover": ""
+    "cover": "cover.jpg"
   },
   {
     "slug": "la-maison-qui-ecoutait",
     "title": "La Maison qui écoutait",
     "author": "T.R. Loiseau",
-    "pitch": "Une femme victime d'une agression traumatisante à Paris se retire dans une maison isolée dans les Pyrénées pour se reconstruire. Mais la maison est une smart home connectée — et son mari, resté à Paris, l'utilise pour la déstabiliser.",
+    "pitch": "Après une agression à Paris, une femme se retire dans une maison isolée des Pyrénées. La maison est connectée. Elle écoute. Et le silence de la montagne n’est peut-être pas vide.",
     "estimatedTime": "2 h 50",
     "chapterCount": 14,
     "status": "ongoing",
     "genre": "Thriller psychologique",
-    "cover": ""
+    "cover": "cover.jpg"
   }
 ]

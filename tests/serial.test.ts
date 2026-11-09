@@ -3,8 +3,10 @@ import { test } from "node:test"
 import {
   asSerialMeta,
   isLocked,
+  isPublicChapterFile,
   parseStoryPath,
   recapNs,
+  resumeEpisode,
   scrollPercent,
   serialBuyHref,
   serialBookId,
@@ -13,7 +15,7 @@ import {
   wantsTenMinuteSession,
 } from "../src/serial/catalog.ts"
 import { renderMarkdown } from "../src/serial/markdown.ts"
-import { recommendSlug } from "../src/serial/quiz.ts"
+import { decorsForGenre, recommendSlug } from "../src/serial/quiz.ts"
 import { addWaitlist, isValidEmail, parseWaitlist } from "../src/serial/waitlist.ts"
 
 test("les routes /histoires/slug et /histoires/slug/n sont reconnues", () => {
@@ -31,13 +33,24 @@ test("les chapitres après le 2e sont verrouillés", () => {
   assert.equal(isLocked(1), false)
   assert.equal(isLocked(2), false)
   assert.equal(isLocked(3), true)
+  assert.equal(isLocked(5, 2, true), false)
+  assert.equal(isPublicChapterFile("01.md"), true)
+  assert.equal(isPublicChapterFile("01.recap.md"), true)
+  assert.equal(isPublicChapterFile("03.md"), false)
+  assert.equal(resumeEpisode(5, 2, false), 2)
+  assert.equal(resumeEpisode(5, 2, true), 5)
+  assert.equal(resumeEpisode(1, 2, false), 1)
 })
 
 test("le quiz oriente vers une série existante", () => {
   assert.equal(recommendSlug("frisson", "chalet"), "la-maison-qui-ecoutait")
+  assert.equal(recommendSlug("frisson"), "la-maison-qui-ecoutait")
   assert.equal(recommendSlug("rire", "administration"), "abel-doit-nuire")
   assert.equal(recommendSlug("rire", "grece"), "lodyssee-fiscale")
   assert.equal(recommendSlug("rire", "colonie"), "lavare-2052")
+  assert.equal(recommendSlug("rire", "chalet"), "lavare-2052")
+  assert.deepEqual(decorsForGenre("frisson"), ["chalet"])
+  assert.deepEqual(decorsForGenre("rire"), ["colonie", "administration", "grece"])
 })
 
 test("la liste d’attente reste locale et dédupliquée", () => {

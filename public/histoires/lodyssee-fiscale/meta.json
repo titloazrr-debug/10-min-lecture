@@ -7,7 +7,7 @@
   "pitch": "L'Histoire est écrite par les vainqueurs. Elle est corrigée par leurs comptables.",
   "summary": "L'Histoire est écrite par les vainqueurs. Elle est corrigée par leurs comptables. Au lendemain de Troie, Ulysse d'Ithaque est bredouille, lombaires en berne, et attendu par des créanciers dont les intérêts composés dépassent le PIB de son île.",
   "slug": "lodyssee-fiscale",
-  "cover": "",
+  "cover": "cover.jpg",
   "buyUrl": "",
   "freeUntil": 2,
   "chapterCount": 13,
@@ -15,7 +15,8 @@
     {
       "n": 1,
       "title": "Prologue — Troie, lendemain de la chute",
-      "file": "01.md"
+      "file": "01.md",
+      "recap": "01.recap.md"
     },
     {
       "n": 2,

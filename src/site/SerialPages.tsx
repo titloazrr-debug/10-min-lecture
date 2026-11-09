@@ -8,6 +8,7 @@ import {
   nextEpisode,
   recapNs,
   recapStartsOpen,
+  resumeEpisode,
   scrollPercent,
   serialProgressLabel,
   storyHref,
@@ -39,7 +40,11 @@ export function SerialCatalog() {
         <div className="story-grid">
           {items.map((item) => (
             <a key={item.slug} className="story-card" href={storyHref(item.slug)}>
-              <span className="story-cover" aria-hidden="true">{item.title.slice(0, 1)}</span>
+              {item.cover ? (
+                <img className="story-cover" src={`/histoires/${item.slug}/${item.cover}`} alt="" />
+              ) : (
+                <span className="story-cover" aria-hidden="true">{item.title.slice(0, 1)}</span>
+              )}
               <span className="story-card-body">
                 <strong>{item.title}</strong>
                 <span className="hint">{item.author}</span>
@@ -99,12 +104,13 @@ export function SerialToc({ slug }: { slug: string }) {
 
   const book = data.books.find((item) => item.source === "feuilleton" && item.slug === slug)
   const started = (book?.progress?.percent ?? 0) > 0 || (book?.episodesRead?.length ?? 0) > 0
-  const resumeN = Math.min(book?.progress?.episode ?? 1, meta.freeUntil)
+  const resumeN = resumeEpisode(book?.progress?.episode, meta.freeUntil)
   const resumeHref = started ? storyHref(slug, resumeN) : storyHref(slug, 1)
   const resumeLabel = started ? `Reprendre le chapitre ${resumeN}` : "Commencer les 10 premières minutes"
 
   return (
     <main className="site-main serial-toc">
+      {meta.cover ? <img className="story-cover-hero" src={`/histoires/${slug}/${meta.cover}`} alt="" /> : null}
       <p className="kicker">{meta.genre} · {meta.author}</p>
       <h1>{meta.title}</h1>
       <p className="site-lede">{meta.summary || meta.pitch}</p>
@@ -155,6 +161,16 @@ export function SerialReader({ slug, episode: n }: { slug: string; episode: numb
   const restored = useRef(false)
   const started = useRef(false)
   const bookIdRef = useRef<string | null>(null)
+
+  function savePlace(markRead: boolean) {
+    const id = bookIdRef.current
+    const node = articleRef.current
+    if (!node || !id) return
+    const range = node.scrollHeight - node.clientHeight
+    const percent = scrollPercent(node.scrollTop, range)
+    storeRef.current.saveSerialProgress(id, n, percent, markRead)
+    if (percent >= 90) setAtEnd(true)
+  }
 
   const prefs = data.readerPrefs
   const book = data.books.find((item) => item.source === "feuilleton" && item.slug === slug)
@@ -255,28 +271,28 @@ export function SerialReader({ slug, episode: n }: { slug: string; episode: numb
   useEffect(() => {
     const node = articleRef.current
     if (!node || !html || html === "locked") return
-    function persist(markRead: boolean) {
+    function persist() {
       const id = bookIdRef.current
       if (!articleRef.current || !id) return
       const range = articleRef.current.scrollHeight - articleRef.current.clientHeight
       const percent = scrollPercent(articleRef.current.scrollTop, range)
-      storeRef.current.saveSerialProgress(id, n, percent, markRead || percent >= 90)
+      storeRef.current.saveSerialProgress(id, n, percent, percent >= 90)
       if (percent >= 90) setAtEnd(true)
     }
     function onScroll() {
-      persist(false)
+      persist()
     }
     function onHide() {
-      if (document.visibilityState === "hidden") persist(false)
+      if (document.visibilityState === "hidden") persist()
     }
-    const id = window.setInterval(() => persist(false), 2000)
+    const id = window.setInterval(() => persist(), 2000)
     node.addEventListener("scroll", onScroll, { passive: true })
     document.addEventListener("visibilitychange", onHide)
     return () => {
       window.clearInterval(id)
       node.removeEventListener("scroll", onScroll)
       document.removeEventListener("visibilitychange", onHide)
-      persist(false)
+      persist()
     }
   }, [html, n])
 
@@ -307,7 +323,7 @@ export function SerialReader({ slug, episode: n }: { slug: string; episode: numb
       <main className="site-main">
         <p className="kicker">{meta.title}</p>
         <h1>Chapitre {n} verrouillé</h1>
-        <p className="site-lede">Les deux premiers chapitres sont libres. La suite s’ouvre ici.</p>
+        <p className="site-lede">Les deux premiers chapitres sont libres. La suite n’est pas encore en vente.</p>
         <Paywall slug={slug} buyUrl={meta.buyUrl} />
         <p className="footer-note"><a href={storyHref(slug)}>Retour à la fiche</a></p>
       </main>
@@ -390,8 +406,8 @@ export function SerialReader({ slug, episode: n }: { slug: string; episode: numb
 
       {tenUp ? (
         <div className="card stack serial-banner">
-          <p>10 minutes, bravo. Tu peux t’arrêter là, ou finir l’épisode.</p>
-          <button type="button" className="btn btn-ghost" onClick={() => { markFinished(); clearActive(); window.location.href = storyHref(slug) }}>
+          <p>10 minutes, bravo. Tu peux t’arrêter là, ou continuer le chapitre. La session n’est pas la fin du chapitre.</p>
+          <button type="button" className="btn btn-ghost" onClick={() => { savePlace(false); clearActive(); window.location.href = storyHref(slug) }}>
             Je m’arrête là
           </button>
           <button type="button" className="btn btn-primary" onClick={() => writeActive({ ...serialTimer!, continued: true, signaled: true })}>

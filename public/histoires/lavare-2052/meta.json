@@ -7,7 +7,7 @@
   "pitch": "Une comédie post-apocalyptique librement inspirée de Molière. Harpagon règne sur la Cuve-Basse, là où chaque litre d'eau et chaque goutte de brut se comptent.",
   "summary": "Une comédie post-apocalyptique librement inspirée de Molière. En 2052, Harpagon règne sur la Cuve-Basse, une forteresse de ferraille au milieu du Secteur 7, là où chaque litre d'eau et chaque goutte de brut se comptent.",
   "slug": "lavare-2052",
-  "cover": "",
+  "cover": "cover.jpg",
   "buyUrl": "",
   "freeUntil": 2,
   "chapterCount": 10,
@@ -15,7 +15,8 @@
     {
       "n": 1,
       "title": "Chapitre 1 — La Danse du Litre et de la Grande Gueule",
-      "file": "01.md"
+      "file": "01.md",
+      "recap": "01.recap.md"
     },
     {
       "n": 2,

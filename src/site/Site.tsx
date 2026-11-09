@@ -18,11 +18,11 @@ const pages: Record<string, { title: string; description: string; robots?: strin
   },
   "/decouvrir": {
     title: "Découvrir · 10 min lecture",
-    description: "Trois questions. Une série. Dix minutes pour commencer.",
+    description: "Deux questions. Une série. Dix minutes pour commencer.",
   },
   "/quiz": {
     title: "Découvrir · 10 min lecture",
-    description: "Trois questions. Une série. Dix minutes pour commencer.",
+    description: "Deux questions. Une série. Dix minutes pour commencer.",
   },
   "/lire-au-lieu-de-scroller": {
     title: "Je scrolle au lieu de lire : comment reprendre un livre le soir",
@@ -69,6 +69,7 @@ export function Site({ path }: { path: string }) {
         setMeta("property", "og:description", page.description)
       }
     }
+    setCanonical(`${window.location.origin}${path}`)
     const source = visitSource(window.location.search)
     track("visit", source ? { page: path, source } : { page: path })
   }, [page, path])
@@ -206,7 +207,6 @@ function Privacy() {
         <li>Note ajoutée : seulement « note » ou « à retenir ».</li>
         <li>Réponse à une question : oui, un peu, ou non.</li>
         <li>Feuilleton : début ou fin d’un épisode (le slug public et le numéro), ou clic vers la boutique externe.</li>
-        <li>Liste d’attente email : l’adresse reste sur cet appareil. Rien n’est envoyé tant que l’envoi n’est pas en place.</li>
       </ul>
       <p className="hint">Tu peux couper l’envoi dans l’app : Réglages, « Partager des statistiques anonymes ». Sans outil de mesure configuré, rien ne part.</p>
       <p className="footer-note">Tes lectures restent sur cet appareil. <a href="/confidentialite">Confidentialité</a></p>
@@ -239,6 +239,16 @@ function SiteMenu() {
       </nav>
     </header>
   )
+}
+
+function setCanonical(href: string) {
+  let element = document.head.querySelector("link[rel='canonical']")
+  if (!element) {
+    element = document.createElement("link")
+    element.setAttribute("rel", "canonical")
+    document.head.appendChild(element)
+  }
+  element.setAttribute("href", href)
 }
 
 function setMeta(attr: "name" | "property", key: string, content: string) {

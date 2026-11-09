@@ -54,8 +54,25 @@ export function storyHref(slug: string, chapter?: number): string {
   return `/histoires/${slug}/${chapter}`
 }
 
-export function isLocked(n: number, freeUntil = FREE_UNTIL): boolean {
-  return n > freeUntil
+export function canReadEpisode(n: number, freeUntil = FREE_UNTIL, unlocked = false): boolean {
+  return unlocked || n <= freeUntil
+}
+
+export function isLocked(n: number, freeUntil = FREE_UNTIL, unlocked = false): boolean {
+  return !canReadEpisode(n, freeUntil, unlocked)
+}
+
+/** Reprend l’épisode en cours s’il est lisible, sinon le dernier chapitre libre. */
+export function resumeEpisode(progressEpisode: number | undefined, freeUntil = FREE_UNTIL, unlocked = false): number {
+  const episode = progressEpisode ?? 1
+  if (canReadEpisode(episode, freeUntil, unlocked)) return Math.max(1, episode)
+  return Math.max(1, freeUntil)
+}
+
+export function isPublicChapterFile(file: string, freeUntil = FREE_UNTIL): boolean {
+  const match = /^(\d+)(?:\.recap)?\.md$/.exec(file)
+  if (!match || !match[1]) return false
+  return Number(match[1]) <= freeUntil
 }
 
 export function wantsTenMinuteSession(search: string): boolean {

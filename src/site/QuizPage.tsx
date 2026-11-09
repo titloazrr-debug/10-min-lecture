@@ -2,41 +2,45 @@ import { useState } from "react"
 import { track } from "../lib/track.ts"
 import { storyHref } from "../serial/catalog.ts"
 import { loadSerialMeta } from "../serial/load.ts"
-import { recommendSlug, type DecorChoice, type GenreChoice } from "../serial/quiz.ts"
+import { DECOR_LABELS, decorsForGenre, recommendSlug, type DecorChoice, type GenreChoice } from "../serial/quiz.ts"
 import type { SerialMeta } from "../serial/catalog.ts"
 
 export function QuizPage() {
-  const [step, setStep] = useState<"genre" | "decor" | "time" | "result">("genre")
+  const [step, setStep] = useState<"genre" | "decor" | "result">("genre")
   const [genre, setGenre] = useState<GenreChoice | null>(null)
-  const [decor, setDecor] = useState<DecorChoice | null>(null)
   const [meta, setMeta] = useState<SerialMeta | null>(null)
 
-  function pickGenre(choice: GenreChoice) {
-    setGenre(choice)
-    setStep("decor")
-    track("cta_click", { placement: "quiz-genre" })
-  }
-
-  function pickDecor(choice: DecorChoice) {
-    setDecor(choice)
-    setStep("time")
-    track("cta_click", { placement: "quiz-decor" })
-  }
-
-  async function pickTime() {
-    if (!genre || !decor) return
-    const slug = recommendSlug(genre, decor)
+  async function showResult(nextGenre: GenreChoice, decor?: DecorChoice) {
+    const slug = recommendSlug(nextGenre, decor)
     const next = await loadSerialMeta(slug)
     setMeta(next)
     setStep("result")
-    track("cta_click", { placement: "quiz-time" })
   }
+
+  function pickGenre(choice: GenreChoice) {
+    setGenre(choice)
+    track("cta_click", { placement: "quiz-genre" })
+    const decors = decorsForGenre(choice)
+    if (decors.length <= 1) {
+      void showResult(choice, decors[0])
+      return
+    }
+    setStep("decor")
+  }
+
+  function pickDecor(choice: DecorChoice) {
+    if (!genre) return
+    track("cta_click", { placement: "quiz-decor" })
+    void showResult(genre, choice)
+  }
+
+  const decors = genre ? decorsForGenre(genre) : []
 
   return (
     <main className="site-main">
       <p className="kicker">Découvrir</p>
       <h1>Quelle histoire ce soir ?</h1>
-      <p className="site-lede">Trois questions. Une série. Dix minutes pour commencer.</p>
+      <p className="site-lede">Deux questions. Une série. Dix minutes pour commencer.</p>
 
       {step === "genre" ? (
         <section className="card stack">
@@ -44,30 +48,20 @@ export function QuizPage() {
           <button type="button" className="btn btn-secondary btn-block" onClick={() => pickGenre("rire")}>
             🎭 Rire et légèreté
           </button>
-          <p className="hint">Ulysse Truffaut</p>
           <button type="button" className="btn btn-secondary btn-block" onClick={() => pickGenre("frisson")}>
             🔪 Frisson
           </button>
-          <p className="hint">T.R. Loiseau</p>
         </section>
       ) : null}
 
       {step === "decor" ? (
         <section className="card stack">
           <h2>Quel décor ?</h2>
-          <button type="button" className="btn btn-secondary btn-block" onClick={() => pickDecor("administration")}>Administration absurde</button>
-          <button type="button" className="btn btn-secondary btn-block" onClick={() => pickDecor("grece")}>Grèce antique</button>
-          <button type="button" className="btn btn-secondary btn-block" onClick={() => pickDecor("colonie")}>Colonie sous IA</button>
-          <button type="button" className="btn btn-secondary btn-block" onClick={() => pickDecor("chalet")}>Chalet sous la neige</button>
-        </section>
-      ) : null}
-
-      {step === "time" ? (
-        <section className="card stack">
-          <h2>Combien de temps ?</h2>
-          <button type="button" className="btn btn-primary btn-block" onClick={() => void pickTime()}>
-            10 minutes
-          </button>
+          {decors.map((decor) => (
+            <button key={decor} type="button" className="btn btn-secondary btn-block" onClick={() => pickDecor(decor)}>
+              {DECOR_LABELS[decor]}
+            </button>
+          ))}
         </section>
       ) : null}
 
@@ -75,7 +69,7 @@ export function QuizPage() {
         <section className="card stack">
           {meta ? (
             <>
-              <p className="kicker">{meta.author}</p>
+              <p className="kicker">{meta.genre}</p>
               <h2>{meta.title}</h2>
               <p>{meta.pitch}</p>
               <a className="btn btn-primary" href={`${storyHref(meta.slug, 1)}?session=10`} onClick={() => track("cta_click", { placement: "quiz-start" })}>

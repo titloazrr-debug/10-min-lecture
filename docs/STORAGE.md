@@ -11,7 +11,7 @@ Toutes les lectures et écritures passent par `src/storage.ts`. Il n’y a pas d
 | `10ml:backup:<version>:<date>` | Instantané brut pris avant une migration, un import ou une restauration. Les 3 plus récents sont gardés. |
 | `10ml:corrupt:<date>` | Copie d’un JSON illisible. La clé d’origine n’est pas écrasée. |
 | `10ml:active` | Session en cours seulement : livre, mode, début, pause, temps de pause, objectif. Ce n’est pas la bibliothèque. Une écriture ici ne remplace pas `10ml:data`. |
-| `10ml:waitlist` | Liste d’attente email du paywall (adresse, slug, date). Hors `10ml:data`. Rien n’est envoyé tant que l’envoi n’est pas en place. |
+| `10ml:waitlist` | Ancienne clé d’essai. La collecte d’email n’est plus proposée. |
 
 `sessionStorage` sert seulement à ne pas répéter la notification du jour (`dix-min-rappel-…`). Ce n’est pas la bibliothèque.
 

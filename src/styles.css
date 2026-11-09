@@ -1030,11 +1030,20 @@ textarea { min-height: 96px; resize: vertical; }
   place-items: center;
   width: 56px;
   height: 72px;
+  object-fit: cover;
   border-radius: 10px;
   background: var(--sage-soft);
   color: var(--sage-deep);
   font-family: var(--serif);
   font-size: 1.6rem;
+}
+
+.story-cover-hero {
+  width: min(180px, 42%);
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
 }
 
 .story-card-body {

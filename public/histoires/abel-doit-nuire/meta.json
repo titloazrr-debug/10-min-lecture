@@ -7,7 +7,7 @@
   "pitch": "Une colonie pilote affiche un taux de criminalité trop bas — ce que la Guidance considère comme une anomalie statistique. Dans un système où la déviance est nécessaire à l'équilibre, quelqu'un doit commettre des crimes.",
   "summary": "Une colonie pilote « La Concorde » affiche un taux de criminalité trop bas — ce que la Guidance (l'IA qui fournit tout aux habitants) considère comme une anomalie statistique. Dans un système où la déviance est nécessaire à l'équilibre, quelqu'un doit commettre des crimes. Et ce quelqu'un, c'est Abel — l'homme le plus gentil de la colonie.",
   "slug": "abel-doit-nuire",
-  "cover": "",
+  "cover": "cover.jpg",
   "buyUrl": "",
   "freeUntil": 2,
   "chapterCount": 13,
@@ -15,7 +15,8 @@
     {
       "n": 1,
       "title": "Chapitre 1 — La Notification",
-      "file": "01.md"
+      "file": "01.md",
+      "recap": "01.recap.md"
     },
     {
       "n": 2,

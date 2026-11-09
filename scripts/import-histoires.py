@@ -8,6 +8,8 @@ import re
 from pathlib import Path
 
 ROOT = Path("/Users/thierryloiseau/10-min-lecture/public/histoires")
+PAID = Path("/Users/thierryloiseau/10-min-lecture/content/histoires")
+FREE_UNTIL = 2
 PAND = re.compile(r"\{\.unnumbered\}")
 NEWPAGE = re.compile(r"\\newpage")
 YAML = re.compile(r"^---\n.*?\n---\n+", re.S)
@@ -37,25 +39,34 @@ def split_by(text: str, pattern: str) -> list[tuple[str, str]]:
 
 
 def write_series(slug: str, chapters: list[tuple[str, str]], meta: dict) -> None:
-    folder = ROOT / slug
-    folder.mkdir(parents=True, exist_ok=True)
+    public_folder = ROOT / slug
+    paid_folder = PAID / slug
+    public_folder.mkdir(parents=True, exist_ok=True)
+    paid_folder.mkdir(parents=True, exist_ok=True)
     episodes = []
+    words = 0
     for index, (title, body) in enumerate(chapters, start=1):
         name = f"{index:02d}.md"
-        (folder / name).write_text(clean(body), encoding="utf-8")
-        episodes.append({"n": index, "title": title, "file": name})
+        text = clean(body)
+        words += len(text.split())
+        dest = public_folder if index <= FREE_UNTIL else paid_folder
+        (dest / name).write_text(text, encoding="utf-8")
+        episode = {"n": index, "title": title, "file": name}
+        recap = public_folder / f"{index:02d}.recap.md"
+        if recap.exists():
+            episode["recap"] = recap.name
+        episodes.append(episode)
     meta = {
         **meta,
         "slug": slug,
-        "cover": meta.get("cover", ""),
+        "cover": meta.get("cover", "cover.jpg") if (public_folder / "cover.jpg").exists() else meta.get("cover", ""),
         "buyUrl": meta.get("buyUrl", ""),
-        "freeUntil": 2,
+        "freeUntil": FREE_UNTIL,
         "chapterCount": len(episodes),
         "episodes": episodes,
     }
-    (folder / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    words = sum(len((folder / ep["file"]).read_text(encoding="utf-8").split()) for ep in episodes)
-    print(f"{slug}: {len(episodes)} chapitres, {words} mots")
+    (public_folder / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"{slug}: {len(episodes)} chapitres, {words} mots (public ≤ {FREE_UNTIL})")
 
 
 def avare() -> list[tuple[str, str]]:
@@ -174,8 +185,8 @@ def main() -> None:
             "genre": "Thriller psychologique",
             "status": "ongoing",
             "estimatedTime": minutes_label(m),
-            "pitch": "Une femme victime d'une agression traumatisante à Paris se retire dans une maison isolée dans les Pyrénées pour se reconstruire. Mais la maison est une smart home connectée — et son mari, resté à Paris, l'utilise pour la déstabiliser.",
-            "summary": "Une femme victime d'une agression traumatisante à Paris se retire dans une maison isolée dans les Pyrénées pour se reconstruire. Mais la maison est une « smart home » connectée — et son mari, resté à Paris, l'utilise pour la déstabiliser, la faire douter de sa santé mentale, la reconquérir par la peur.",
+            "pitch": "Après une agression à Paris, une femme se retire dans une maison isolée des Pyrénées. La maison est connectée. Elle écoute. Et le silence de la montagne n’est peut-être pas vide.",
+            "summary": "Après une agression à Paris, Ariane se retire dans une maison isolée des Pyrénées pour se reconstruire. La maison est connectée. Les pièces répondent. Le silence de la montagne n’est peut-être pas vide.",
         },
     )
     series.append({"slug": "la-maison-qui-ecoutait", "title": "La Maison qui écoutait", "author": "T.R. Loiseau"})
