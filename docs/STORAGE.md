@@ -11,10 +11,11 @@ Toutes les lectures et écritures passent par `src/storage.ts`. Il n’y a pas d
 | `10ml:backup:<version>:<date>` | Instantané brut pris avant une migration, un import ou une restauration. Les 3 plus récents sont gardés. |
 | `10ml:corrupt:<date>` | Copie d’un JSON illisible. La clé d’origine n’est pas écrasée. |
 | `10ml:active` | Session en cours seulement : livre, mode, début, pause, temps de pause, objectif. Ce n’est pas la bibliothèque. Une écriture ici ne remplace pas `10ml:data`. |
+| `10ml:waitlist` | Liste d’attente email du paywall (adresse, slug, date). Hors `10ml:data`. Rien n’est envoyé tant que l’envoi n’est pas en place. |
 
 `sessionStorage` sert seulement à ne pas répéter la notification du jour (`dix-min-rappel-…`). Ce n’est pas la bibliothèque.
 
-## Forme actuelle (schemaVersion 6)
+## Forme actuelle (schemaVersion 7)
 
 - `books` : id, titre, auteur, page actuelle, nombre de pages, `createdAt`. Les champs inconnus sont conservés.
 - `sessions` : id, livre, début, fin, durée, page avant, page après. `mode` (`papier` ou `ecran`) est facultatif.
@@ -32,6 +33,8 @@ Toutes les lectures et écritures passent par `src/storage.ts`. Il n’y a pas d
 - `books[].recapCollapsed` : le panneau est replié pour ce livre.
 - `notes[].page` : page facultative. Une note liée à une session récupère `pageAfter` à la migration.
 - `meta.lastBackupAt` : date ISO de la dernière copie téléchargée, ou `null`.
+- `readerPrefs` : taille 1–5, thème `clair` | `sepia` | `sombre`, interligne `serre` | `normal` | `aere`. Défaut 3 / clair / normal.
+- `books[].source` : `feuilleton` pour un feuilleton interne. Absent = livre papier. `slug`, `progress` `{ episode, percent, updatedAt }`, `episodesRead` (numéros terminés ou lus à 90 % et plus).
 
 Les jours lus ne sont pas stockés : ils se calculent depuis les sessions, sur le jour local de `startedAt`.
 

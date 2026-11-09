@@ -77,7 +77,7 @@ test("le schéma 5 garde le livre et le mode de session", () => {
   const result = load(storage)
   assert.equal(result.status, "ok")
   if (result.status !== "ok") return
-  assert.equal(result.data.schemaVersion, 6)
+  assert.equal(result.data.schemaVersion, 7)
   assert.equal(result.data.books[0]?.title, "Dune")
   assert.equal(result.data.books[0]?.currentPage, 86)
   assert.equal(result.data.settings.analytics, false)

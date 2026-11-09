@@ -13,7 +13,8 @@ import {
   snapshotRaw,
   type StorageProblem,
 } from "./storage.ts"
-import type { Book, ChallengeAnswer, Data, NoteKind, ReadingMode, Reminder } from "./types.ts"
+import { upsertSerialBook, withEpisodeRead, type SerialMeta } from "./serial/catalog.ts"
+import type { Book, ChallengeAnswer, Data, NoteKind, ReaderPrefs, ReadingMode, Reminder } from "./types.ts"
 
 type NewBook = { title: string; author: string; currentPage: number; totalPages: number | null }
 
@@ -31,6 +32,9 @@ type NewSession = {
 type Store = {
   data: Data
   addBook: (input: NewBook) => string
+  ensureSerial: (meta: SerialMeta) => string
+  saveSerialProgress: (id: string, episode: number, percent: number, markRead: boolean) => void
+  setReaderPrefs: (patch: Partial<ReaderPrefs>) => void
   updateBook: (id: string, patch: Partial<Pick<Book, "title" | "author" | "currentPage" | "totalPages" | "recapCollapsed">>) => void
   setShowRecap: (show: boolean) => void
   setAnalytics: (enabled: boolean) => void
@@ -123,6 +127,38 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         currentBookId: current.currentBookId ?? id,
       }))
       return id
+    },
+    ensureSerial(meta) {
+      let id = ""
+      setData((current) => {
+        const next = upsertSerialBook(current.books, meta)
+        id = next.id
+        if (!next.created) {
+          if (current.currentBookId === next.id) return current
+          return { ...current, currentBookId: next.id }
+        }
+        return { ...current, books: next.books, currentBookId: next.id }
+      })
+      return id
+    },
+    saveSerialProgress(id, episode, percent, markRead) {
+      const now = new Date().toISOString()
+      setData((current) => ({
+        ...current,
+        books: current.books.map((book) => {
+          if (book.id !== id) return book
+          const episodesRead = markRead ? withEpisodeRead(book.episodesRead ?? [], episode) : book.episodesRead
+          return {
+            ...book,
+            currentPage: episode,
+            progress: { episode, percent, updatedAt: now },
+            ...(episodesRead ? { episodesRead } : {}),
+          }
+        }),
+      }))
+    },
+    setReaderPrefs(patch) {
+      setData((current) => ({ ...current, readerPrefs: { ...current.readerPrefs, ...patch } }))
     },
     updateBook(id, patch) {
       setData((current) => ({

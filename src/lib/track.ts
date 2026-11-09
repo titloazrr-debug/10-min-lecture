@@ -89,6 +89,9 @@ function knownEvent(event: string): boolean {
     || event === "return_7d"
     || event === "note_added"
     || event === "challenge_answer"
+    || event === "serial_ep_start"
+    || event === "serial_ep_finish"
+    || event === "buy_click"
 }
 
 function dispatch(env: AnalyticsEnv, event: string, props: Record<string, string | number | boolean>): boolean {

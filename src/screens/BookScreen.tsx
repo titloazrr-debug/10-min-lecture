@@ -12,6 +12,7 @@ import {
 } from "../logic.ts"
 import { useStore } from "../store.tsx"
 import type { Route } from "../types.ts"
+import { isSerial, resumeSerialHref, serialProgressLabel } from "../serial/catalog.ts"
 import { ResumePanel } from "./ResumePanel.tsx"
 import { Field, PageMark } from "../ui.tsx"
 
@@ -94,10 +95,20 @@ export function BookScreen({ bookId, go }: { bookId: string; go: (route: Route) 
         <p className="kicker">{isCurrent ? "Livre en cours" : "Livre"}</p>
         <h1 className="book-title">{book.title}</h1>
         <p className="author">{displayAuthor(book.author)}</p>
-        <PageMark current={book.currentPage} total={book.totalPages} />
+        {isSerial(book) ? <p className="page-line">{serialProgressLabel(book)}</p> : <PageMark current={book.currentPage} total={book.totalPages} />}
       </header>
       <main className="screen">
-        {data.settings.showRecap ? (
+        {isSerial(book) ? (
+          <section className="card stack">
+            <a className="btn btn-primary btn-block" href={`${resumeSerialHref(book) ?? `/histoires/${book.slug}`}?session=10`}>
+              Reprendre l’épisode {book.progress?.episode ?? 1} · 10 minutes
+            </a>
+            <a className="btn btn-ghost btn-block" href={`/histoires/${book.slug}`}>Sommaire du feuilleton</a>
+            <button type="button" className="btn btn-ghost btn-block" onClick={() => go({ name: "notes", bookId: current.id, order: "chrono" })}>
+              Voir mes notes
+            </button>
+          </section>
+        ) : data.settings.showRecap ? (
           <ResumePanel
             book={current}
             notes={data.notes}
@@ -112,7 +123,7 @@ export function BookScreen({ bookId, go }: { bookId: string; go: (route: Route) 
           </button>
         )}
 
-        <form className="card stack" onSubmit={savePage}>
+        {isSerial(book) ? null : <form className="card stack" onSubmit={savePage}>
           <Field label="Page actuelle" error={pageError}>
             <div className="stepper">
               <button
@@ -135,14 +146,14 @@ export function BookScreen({ bookId, go }: { bookId: string; go: (route: Route) 
             </div>
           </Field>
           {pageDirty ? <button type="submit" className="btn btn-sage btn-block">Enregistrer la page</button> : null}
-        </form>
+        </form>}
 
-        <form className="card stack" onSubmit={saveTotal}>
+        {isSerial(book) ? null : <form className="card stack" onSubmit={saveTotal}>
           <Field label="Nombre de pages" hint="Optionnel. Pour voir où tu en es dans le livre." error={totalError}>
             <input inputMode="numeric" value={total} onChange={(event) => setTotal(event.target.value)} />
           </Field>
           {totalDirty ? <button type="submit" className="btn btn-sage btn-block">Enregistrer le nombre de pages</button> : null}
-        </form>
+        </form>}
         {saved ? <p className="saved">Enregistré.</p> : null}
 
         <section className="card">
@@ -172,7 +183,7 @@ export function BookScreen({ bookId, go }: { bookId: string; go: (route: Route) 
           Voir les notes
         </button>
 
-        <details className="fold">
+        {isSerial(book) ? null : <details className="fold">
           <summary>Modifier le titre ou l’auteur</summary>
           <form className="stack" onSubmit={saveIdentity}>
             <Field label="Titre">
@@ -183,7 +194,7 @@ export function BookScreen({ bookId, go }: { bookId: string; go: (route: Route) 
             </Field>
             <button type="submit" className="btn btn-ghost btn-block" disabled={title.trim() === ""}>Enregistrer</button>
           </form>
-        </details>
+        </details>}
 
         <button type="button" className="text-btn danger" onClick={remove}>Retirer ce livre</button>
       </main>

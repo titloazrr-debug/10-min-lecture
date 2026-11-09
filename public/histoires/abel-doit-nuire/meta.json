@@ -1,0 +1,81 @@
+{
+  "title": "Abel doit nuire",
+  "author": "Ulysse Truffaut",
+  "genre": "Fable de l'audit",
+  "status": "completed",
+  "estimatedTime": "1 h 17",
+  "pitch": "Une colonie pilote affiche un taux de criminalité trop bas — ce que la Guidance considère comme une anomalie statistique. Dans un système où la déviance est nécessaire à l'équilibre, quelqu'un doit commettre des crimes.",
+  "summary": "Une colonie pilote « La Concorde » affiche un taux de criminalité trop bas — ce que la Guidance (l'IA qui fournit tout aux habitants) considère comme une anomalie statistique. Dans un système où la déviance est nécessaire à l'équilibre, quelqu'un doit commettre des crimes. Et ce quelqu'un, c'est Abel — l'homme le plus gentil de la colonie.",
+  "slug": "abel-doit-nuire",
+  "cover": "",
+  "buyUrl": "",
+  "freeUntil": 2,
+  "chapterCount": 13,
+  "episodes": [
+    {
+      "n": 1,
+      "title": "Chapitre 1 — La Notification",
+      "file": "01.md"
+    },
+    {
+      "n": 2,
+      "title": "Chapitre 2 — Le Miroir",
+      "file": "02.md"
+    },
+    {
+      "n": 3,
+      "title": "Chapitre 3 — La Benne et la Politesse",
+      "file": "03.md"
+    },
+    {
+      "n": 4,
+      "title": "Chapitre 4 — Le Vase de Madame Charrier",
+      "file": "04.md"
+    },
+    {
+      "n": 5,
+      "title": "Chapitre 5 — L’Hortensia de Madame Lormeau",
+      "file": "05.md"
+    },
+    {
+      "n": 6,
+      "title": "Chapitre 6 — La Visite",
+      "file": "06.md"
+    },
+    {
+      "n": 7,
+      "title": "Chapitre 7 — Le Tableur Clandestin",
+      "file": "07.md"
+    },
+    {
+      "n": 8,
+      "title": "Chapitre 8 — La Dénonciation de Madame Vidal",
+      "file": "08.md"
+    },
+    {
+      "n": 9,
+      "title": "Chapitre 9 — La Déchiqueteuse",
+      "file": "09.md"
+    },
+    {
+      "n": 10,
+      "title": "Chapitre 10 — L’Escalier de Madame Pichot",
+      "file": "10.md"
+    },
+    {
+      "n": 11,
+      "title": "Chapitre 11 — Le Tribunal des Bien-Pensants",
+      "file": "11.md"
+    },
+    {
+      "n": 12,
+      "title": "Chapitre 12 — L’Audit",
+      "file": "12.md"
+    },
+    {
+      "n": 13,
+      "title": "Chapitre 13 — La Place et le Venin",
+      "file": "13.md"
+    }
+  ]
+}

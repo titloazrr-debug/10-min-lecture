@@ -1,0 +1,66 @@
+{
+  "title": "L'Avare 2052",
+  "author": "Ulysse Truffaut",
+  "genre": "Satire post-apo",
+  "status": "completed",
+  "estimatedTime": "59 min",
+  "pitch": "Une comédie post-apocalyptique librement inspirée de Molière. Harpagon règne sur la Cuve-Basse, là où chaque litre d'eau et chaque goutte de brut se comptent.",
+  "summary": "Une comédie post-apocalyptique librement inspirée de Molière. En 2052, Harpagon règne sur la Cuve-Basse, une forteresse de ferraille au milieu du Secteur 7, là où chaque litre d'eau et chaque goutte de brut se comptent.",
+  "slug": "lavare-2052",
+  "cover": "",
+  "buyUrl": "",
+  "freeUntil": 2,
+  "chapterCount": 10,
+  "episodes": [
+    {
+      "n": 1,
+      "title": "Chapitre 1 — La Danse du Litre et de la Grande Gueule",
+      "file": "01.md"
+    },
+    {
+      "n": 2,
+      "title": "Chapitre 2 — L’Usurier sous le Châssis",
+      "file": "02.md"
+    },
+    {
+      "n": 3,
+      "title": "Chapitre 3 — L'Art de Recevoir sans Graisser la Poêle",
+      "file": "03.md"
+    },
+    {
+      "n": 4,
+      "title": "Chapitre 4 — Les Moissonneuses de l’Ancien Monde",
+      "file": "04.md"
+    },
+    {
+      "n": 5,
+      "title": "Chapitre 5 — Le Banquet des Rations Mortes",
+      "file": "05.md"
+    },
+    {
+      "n": 6,
+      "title": "Chapitre 6 — Au Voleur ! Au Siphonage !",
+      "file": "06.md"
+    },
+    {
+      "n": 7,
+      "title": "Chapitre 7 — Le Conseil de Guerre du Secteur 7",
+      "file": "07.md"
+    },
+    {
+      "n": 8,
+      "title": "Chapitre 8 — L’Alerte de la Sulfureuse",
+      "file": "08.md"
+    },
+    {
+      "n": 9,
+      "title": "Chapitre 9 — Le Prix du Sang et de la Vapeur",
+      "file": "09.md"
+    },
+    {
+      "n": 10,
+      "title": "Chapitre 10 — La Course dans la Poussière",
+      "file": "10.md"
+    }
+  ]
+}

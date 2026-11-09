@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import type { Book, Route } from "./types.ts"
+import { isSerial, serialProgressLabel } from "./serial/catalog.ts"
 import { displayAuthor, pageFraction, pageLabel } from "./logic.ts"
 
 export function IconHome() {
@@ -84,7 +85,7 @@ export function BookListItem({
       <button type="button" className="book-row" onClick={onOpen}>
         <span>
           <span className="book-row-title">{book.title}</span>
-          <span className="book-row-meta">{displayAuthor(book.author)} · {pageLabel(book.currentPage, book.totalPages).toLowerCase()}</span>
+          <span className="book-row-meta">{displayAuthor(book.author)} · {isSerial(book) ? serialProgressLabel(book) : pageLabel(book.currentPage, book.totalPages).toLowerCase()}</span>
         </span>
         {current ? <span className="pill">En cours</span> : null}
       </button>

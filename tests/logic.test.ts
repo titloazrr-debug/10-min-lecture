@@ -129,7 +129,7 @@ test("les données invalides sont ignorées", () => {
   assert.equal(data.sessions.length, 1)
   assert.equal(data.notes.length, 1)
   assert.equal(data.currentBookId, "b1")
-  assert.equal(data.schemaVersion, 6)
+  assert.equal(data.schemaVersion, 7)
   assert.equal(data.settings.sessionMode, "papier")
   assert.equal(data.settings.endSound, false)
   assert.equal(data.settings.reminderTime, null)

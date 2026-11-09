@@ -6,6 +6,19 @@ export type Book = {
   totalPages: number | null
   createdAt: string
   recapCollapsed: boolean
+  source?: "papier" | "feuilleton"
+  slug?: string
+  progress?: { episode: number; percent: number; updatedAt: string }
+  episodesRead?: number[]
+}
+
+export type ReaderTheme = "clair" | "sepia" | "sombre"
+export type ReaderLineHeight = "serre" | "normal" | "aere"
+
+export type ReaderPrefs = {
+  fontSize: 1 | 2 | 3 | 4 | 5
+  theme: ReaderTheme
+  lineHeight: ReaderLineHeight
 }
 
 export type ReadingMode = "papier" | "ecran"
@@ -69,13 +82,14 @@ export type Challenge = {
 }
 
 export type Data = {
-  schemaVersion: 6
+  schemaVersion: 7
   books: Book[]
   sessions: Session[]
   notes: Note[]
   currentBookId: string | null
   settings: Settings
   meta: Meta
+  readerPrefs: ReaderPrefs
   challenge?: Challenge
 }
 

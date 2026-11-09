@@ -1,0 +1,86 @@
+{
+  "title": "La Maison qui écoutait",
+  "author": "T.R. Loiseau",
+  "genre": "Thriller psychologique",
+  "status": "ongoing",
+  "estimatedTime": "2 h 50",
+  "pitch": "Une femme victime d'une agression traumatisante à Paris se retire dans une maison isolée dans les Pyrénées pour se reconstruire. Mais la maison est une smart home connectée — et son mari, resté à Paris, l'utilise pour la déstabiliser.",
+  "summary": "Une femme victime d'une agression traumatisante à Paris se retire dans une maison isolée dans les Pyrénées pour se reconstruire. Mais la maison est une « smart home » connectée — et son mari, resté à Paris, l'utilise pour la déstabiliser, la faire douter de sa santé mentale, la reconquérir par la peur.",
+  "slug": "la-maison-qui-ecoutait",
+  "cover": "",
+  "buyUrl": "",
+  "freeUntil": 2,
+  "chapterCount": 14,
+  "episodes": [
+    {
+      "n": 1,
+      "title": "Chapitre 1 — Le silence minéral",
+      "file": "01.md"
+    },
+    {
+      "n": 2,
+      "title": "Chapitre 2 — La fréquence résiduelle",
+      "file": "02.md"
+    },
+    {
+      "n": 3,
+      "title": "Chapitre 3 — La voix d'à côté",
+      "file": "03.md"
+    },
+    {
+      "n": 4,
+      "title": "Chapitre 4 — La respiration morte",
+      "file": "04.md"
+    },
+    {
+      "n": 5,
+      "title": "Chapitre 5 — La dose prescrite",
+      "file": "05.md"
+    },
+    {
+      "n": 6,
+      "title": "Chapitre 6 — L’Écho",
+      "file": "06.md"
+    },
+    {
+      "n": 7,
+      "title": "Chapitre 7 — Le récit de Vadim",
+      "file": "07.md"
+    },
+    {
+      "n": 8,
+      "title": "Chapitre 8 — Le docteur Larrieu",
+      "file": "08.md"
+    },
+    {
+      "n": 9,
+      "title": "Chapitre 9 — La soirée du chemin",
+      "file": "09.md"
+    },
+    {
+      "n": 10,
+      "title": "Chapitre 10 — Les gens d’ici",
+      "file": "10.md"
+    },
+    {
+      "n": 11,
+      "title": "Chapitre 11 — Nadia entend",
+      "file": "11.md"
+    },
+    {
+      "n": 12,
+      "title": "Chapitre 12 — Les vestiges",
+      "file": "12.md"
+    },
+    {
+      "n": 13,
+      "title": "Chapitre 13 — Deuxième voix",
+      "file": "13.md"
+    },
+    {
+      "n": 14,
+      "title": "Chapitre 14 — La pharmacie",
+      "file": "14.md"
+    }
+  ]
+}

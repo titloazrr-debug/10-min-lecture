@@ -1,0 +1,46 @@
+[
+  {
+    "slug": "lavare-2052",
+    "title": "L'Avare 2052",
+    "author": "Ulysse Truffaut",
+    "pitch": "Une comédie post-apocalyptique librement inspirée de Molière. Harpagon règne sur la Cuve-Basse, là où chaque litre d'eau et chaque goutte de brut se comptent.",
+    "estimatedTime": "59 min",
+    "chapterCount": 10,
+    "status": "completed",
+    "genre": "Satire post-apo",
+    "cover": ""
+  },
+  {
+    "slug": "abel-doit-nuire",
+    "title": "Abel doit nuire",
+    "author": "Ulysse Truffaut",
+    "pitch": "Une colonie pilote affiche un taux de criminalité trop bas — ce que la Guidance considère comme une anomalie statistique. Dans un système où la déviance est nécessaire à l'équilibre, quelqu'un doit commettre des crimes.",
+    "estimatedTime": "1 h 17",
+    "chapterCount": 13,
+    "status": "completed",
+    "genre": "Fable de l'audit",
+    "cover": ""
+  },
+  {
+    "slug": "lodyssee-fiscale",
+    "title": "L'Odyssée (fiscale) d'Ulysse",
+    "author": "Ulysse Truffaut",
+    "pitch": "L'Histoire est écrite par les vainqueurs. Elle est corrigée par leurs comptables.",
+    "estimatedTime": "51 min",
+    "chapterCount": 13,
+    "status": "completed",
+    "genre": "Parodie mythologique",
+    "cover": ""
+  },
+  {
+    "slug": "la-maison-qui-ecoutait",
+    "title": "La Maison qui écoutait",
+    "author": "T.R. Loiseau",
+    "pitch": "Une femme victime d'une agression traumatisante à Paris se retire dans une maison isolée dans les Pyrénées pour se reconstruire. Mais la maison est une smart home connectée — et son mari, resté à Paris, l'utilise pour la déstabiliser.",
+    "estimatedTime": "2 h 50",
+    "chapterCount": 14,
+    "status": "ongoing",
+    "genre": "Thriller psychologique",
+    "cover": ""
+  }
+]

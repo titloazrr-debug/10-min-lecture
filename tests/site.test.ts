@@ -1,5 +1,6 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
+import { parseStoryPath } from "../src/serial/catalog.ts"
 import { homeRedirectTarget, libraryPresent, normalizePath } from "../src/site/paths.ts"
 
 test("un lien profond sur l’accueil part vers /app", () => {
@@ -9,6 +10,7 @@ test("un lien profond sur l’accueil part vers /app", () => {
   assert.equal(homeRedirectTarget("/", "?livre=1", "#session"), "/app?livre=1#session")
   assert.equal(homeRedirectTarget("/app", "?livre=1", ""), null)
   assert.equal(normalizePath("/app/"), "/app")
+  assert.deepEqual(parseStoryPath("/histoires/la-maison-qui-ecoutait/1"), { slug: "la-maison-qui-ecoutait", episode: 1 })
 })
 
 test("le bandeau ne s’affiche que s’il y a une bibliothèque", () => {

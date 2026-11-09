@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client"
 import App from "./App.tsx"
 import { Site } from "./site/Site.tsx"
 import { homeRedirectTarget, normalizePath } from "./site/paths.ts"
+import { StoreProvider } from "./store.tsx"
 import "./styles.css"
 
 const redirect = homeRedirectTarget(window.location.pathname, window.location.search, window.location.hash)
@@ -12,7 +13,9 @@ if (redirect) {
   const path = normalizePath(window.location.pathname)
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
-      {path === "/app" ? <App /> : <Site path={path} />}
+      <StoreProvider>
+        {path === "/app" ? <App /> : <Site path={path} />}
+      </StoreProvider>
     </StrictMode>,
   )
 }

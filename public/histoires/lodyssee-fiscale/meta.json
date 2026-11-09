@@ -1,0 +1,81 @@
+{
+  "title": "L'Odyssée (fiscale) d'Ulysse",
+  "author": "Ulysse Truffaut",
+  "genre": "Parodie mythologique",
+  "status": "completed",
+  "estimatedTime": "51 min",
+  "pitch": "L'Histoire est écrite par les vainqueurs. Elle est corrigée par leurs comptables.",
+  "summary": "L'Histoire est écrite par les vainqueurs. Elle est corrigée par leurs comptables. Au lendemain de Troie, Ulysse d'Ithaque est bredouille, lombaires en berne, et attendu par des créanciers dont les intérêts composés dépassent le PIB de son île.",
+  "slug": "lodyssee-fiscale",
+  "cover": "",
+  "buyUrl": "",
+  "freeUntil": 2,
+  "chapterCount": 13,
+  "episodes": [
+    {
+      "n": 1,
+      "title": "Prologue — Troie, lendemain de la chute",
+      "file": "01.md"
+    },
+    {
+      "n": 2,
+      "title": "Chapitre Premier — La Nef de Poséidon",
+      "file": "02.md"
+    },
+    {
+      "n": 3,
+      "title": "Chapitre Deuxième — Les Lotophages ou l'Art de la Sieste Syndicale",
+      "file": "03.md"
+    },
+    {
+      "n": 4,
+      "title": "Chapitre Troisième — L'Outre d'Éole et la Propulsion Gazeuse",
+      "file": "04.md"
+    },
+    {
+      "n": 5,
+      "title": "Chapitre Quatrième — Le Cyclope ou le Litige Fromager",
+      "file": "05.md"
+    },
+    {
+      "n": 6,
+      "title": "Chapitre Cinquième — Circé ou l'Addition Salée de l'Enchanteresse",
+      "file": "06.md"
+    },
+    {
+      "n": 7,
+      "title": "Chapitre Sixième — Les Enfers ou le Guichet des Ombres",
+      "file": "07.md"
+    },
+    {
+      "n": 8,
+      "title": "Chapitre Septième — Les Sirènes ou l'Art de ne Pas Entendre la Vérité",
+      "file": "08.md"
+    },
+    {
+      "n": 9,
+      "title": "Chapitre Huitième — Charybde, Scylla et l'Épuration des Salaires",
+      "file": "09.md"
+    },
+    {
+      "n": 10,
+      "title": "Chapitre Neuvième — Les Vaches du Soleil ou le Barbecue de Trop",
+      "file": "10.md"
+    },
+    {
+      "n": 11,
+      "title": "Chapitre Dixième — Nausicaa et la Levée de Fonds Phéacienne",
+      "file": "11.md"
+    },
+    {
+      "n": 12,
+      "title": "Chapitre Onzième — Le Palais des Huissiers et le Retour du Débiteur",
+      "file": "12.md"
+    },
+    {
+      "n": 13,
+      "title": "Chapitre Douzième — L'Apurement Physique de la Masse Créancière",
+      "file": "13.md"
+    }
+  ]
+}

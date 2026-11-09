@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { ReprendreArticle, ScrollArticle } from "./articles.tsx"
+import { QuizPage } from "./QuizPage.tsx"
+import { SerialCatalog, SerialReader, SerialToc } from "./SerialPages.tsx"
 import { track, visitSource } from "../lib/track.ts"
+import { parseStoryPath } from "../serial/catalog.ts"
 import { DATA_KEY, LEGACY_KEY, rememberChallenge } from "../storage.ts"
 import { libraryPresent } from "./paths.ts"
 
@@ -9,6 +12,18 @@ const pages: Record<string, { title: string; description: string; robots?: strin
     title: "10 min lecture — Et si tu lisais avant de scroller ?",
     description: "Pour tes livres papier : rouvre ton livre 10 minutes à la fois et retrouve où tu en étais. Sans compte.",
   },
+  "/histoires": {
+    title: "Histoires · 10 min lecture",
+    description: "Des séries à lire 10 minutes à la fois. Les deux premiers chapitres sont libres.",
+  },
+  "/decouvrir": {
+    title: "Découvrir · 10 min lecture",
+    description: "Trois questions. Une série. Dix minutes pour commencer.",
+  },
+  "/quiz": {
+    title: "Découvrir · 10 min lecture",
+    description: "Trois questions. Une série. Dix minutes pour commencer.",
+  },
   "/lire-au-lieu-de-scroller": {
     title: "Je scrolle au lieu de lire : comment reprendre un livre le soir",
     description: "Le soir, le téléphone gagne souvent. Comment ouvrir ton livre avant, sans morale et sans pression.",
@@ -16,11 +31,6 @@ const pages: Record<string, { title: string; description: string; robots?: strin
   "/reprendre-la-lecture": {
     title: "J’ai des livres, mais je n’arrive plus à lire : comment s’y remettre",
     description: "Des livres plein les étagères, et pourtant tu n’arrives plus à t’y mettre ? Quelques idées simples et douces pour retrouver le plaisir de lire, sans pression.",
-  },
-  "/histoires": {
-    title: "Histoires",
-    description: "Bientôt : des histoires à lire 10 minutes à la fois.",
-    robots: "noindex",
   },
   "/confidentialite": {
     title: "Confidentialité",
@@ -34,38 +44,42 @@ const pages: Record<string, { title: string; description: string; robots?: strin
 
 export function Site({ path }: { path: string }) {
   const page = pages[path]
+  const story = parseStoryPath(path)
   const showBanner = useLibraryBanner()
+  const reading = story?.episode != null
 
   useEffect(() => {
-    document.title = page ? page.title : "Page introuvable · 10 min lecture"
-    let robots = document.querySelector('meta[name="robots"]')
-    if (page?.robots) {
-      if (!robots) {
-        robots = document.createElement("meta")
-        robots.setAttribute("name", "robots")
-        document.head.appendChild(robots)
+    if (!parseStoryPath(path)) {
+      document.title = page ? page.title : "Page introuvable · 10 min lecture"
+      let robots = document.querySelector('meta[name="robots"]')
+      if (page?.robots) {
+        if (!robots) {
+          robots = document.createElement("meta")
+          robots.setAttribute("name", "robots")
+          document.head.appendChild(robots)
+        }
+        robots.setAttribute("content", page.robots)
+      } else if (robots) {
+        robots.setAttribute("content", "index,follow")
       }
-      robots.setAttribute("content", page.robots)
-    } else if (robots) {
-      robots.setAttribute("content", "index,follow")
-    }
-    const description = document.querySelector('meta[name="description"]')
-    if (description && page) description.setAttribute("content", page.description)
-    if (page) {
-      setMeta("property", "og:title", page.title)
-      setMeta("property", "og:description", page.description)
+      const description = document.querySelector('meta[name="description"]')
+      if (description && page) description.setAttribute("content", page.description)
+      if (page) {
+        setMeta("property", "og:title", page.title)
+        setMeta("property", "og:description", page.description)
+      }
     }
     const source = visitSource(window.location.search)
     track("visit", source ? { page: path, source } : { page: path })
   }, [page, path])
 
   return (
-    <div className="site">
-      <SiteMenu />
-      {showBanner ? (
+    <div className={reading ? "site serial-site" : "site"}>
+      {reading ? null : <SiteMenu />}
+      {showBanner && !reading ? (
         <a className="resume-banner" href="/app">Reprendre ma lecture →</a>
       ) : null}
-      {path === "/" ? <HomePage /> : path === "/defi" ? <DefiPage /> : path === "/reprendre-la-lecture" ? <ReprendreArticle /> : path === "/lire-au-lieu-de-scroller" ? <ScrollArticle /> : path === "/confidentialite" ? <Privacy /> : page ? <SitePage path={path} title={page.title} description={page.description} /> : <Missing />}
+      {path === "/" ? <HomePage /> : path === "/histoires" ? <SerialCatalog /> : path === "/decouvrir" || path === "/quiz" ? <QuizPage /> : story?.episode != null ? <SerialReader slug={story.slug} episode={story.episode} /> : story ? <SerialToc slug={story.slug} /> : path === "/defi" ? <DefiPage /> : path === "/reprendre-la-lecture" ? <ReprendreArticle /> : path === "/lire-au-lieu-de-scroller" ? <ScrollArticle /> : path === "/confidentialite" ? <Privacy /> : page ? <SitePage title={page.title} description={page.description} /> : <Missing />}
     </div>
   )
 }
@@ -167,12 +181,11 @@ function DefiPage() {
   )
 }
 
-function SitePage({ path, title, description }: { path: string; title: string; description: string }) {
+function SitePage({ title, description }: { title: string; description: string }) {
   return (
     <main className="site-main">
       <h1>{title}</h1>
       <p className="site-lede">{description}</p>
-      {path === "/histoires" ? <a className="btn btn-primary" href="/app">Ouvrir l’app</a> : null}
       <p className="footer-note">Tes lectures restent sur cet appareil. <a href="/confidentialite">Confidentialité</a></p>
     </main>
   )
@@ -192,6 +205,8 @@ function Privacy() {
         <li>Retour après 7 jours : une seule fois, calculé sur cet appareil.</li>
         <li>Note ajoutée : seulement « note » ou « à retenir ».</li>
         <li>Réponse à une question : oui, un peu, ou non.</li>
+        <li>Feuilleton : début ou fin d’un épisode (le slug public et le numéro), ou clic vers la boutique externe.</li>
+        <li>Liste d’attente email : l’adresse reste sur cet appareil. Rien n’est envoyé tant que l’envoi n’est pas en place.</li>
       </ul>
       <p className="hint">Tu peux couper l’envoi dans l’app : Réglages, « Partager des statistiques anonymes ». Sans outil de mesure configuré, rien ne part.</p>
       <p className="footer-note">Tes lectures restent sur cet appareil. <a href="/confidentialite">Confidentialité</a></p>
@@ -213,6 +228,8 @@ function SiteMenu() {
     <header className="site-bar">
       <nav className="site-nav" aria-label="Site">
         <a href="/">Accueil</a>
+        <a href="/decouvrir">Découvrir</a>
+        <a href="/histoires">Histoires</a>
         <details>
           <summary>Articles</summary>
           <a href="/lire-au-lieu-de-scroller">Je scrolle au lieu de lire</a>

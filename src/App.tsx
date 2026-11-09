@@ -8,7 +8,7 @@ import { SettingsScreen } from "./screens/SettingsScreen.tsx"
 import { StatsScreen } from "./screens/StatsScreen.tsx"
 import { track, visitSource } from "./lib/track.ts"
 import { weekReading } from "./logic.ts"
-import { StoreProvider, useStore } from "./store.tsx"
+import { useStore } from "./store.tsx"
 import { clearActive, readActive } from "./timer.ts"
 import type { Data, Route } from "./types.ts"
 import { Nav } from "./ui.tsx"
@@ -164,9 +164,5 @@ function Recovery() {
 }
 
 export default function App() {
-  return (
-    <StoreProvider>
-      <Shell />
-    </StoreProvider>
-  )
+  return <Shell />
 }

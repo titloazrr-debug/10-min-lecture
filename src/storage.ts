@@ -1,7 +1,7 @@
 import { parseReminderTime } from "./logic.ts"
-import type { Book, Challenge, Data, Meta, Note, Reminder, Session, Settings } from "./types.ts"
+import type { Book, Challenge, Data, Meta, Note, ReaderPrefs, Reminder, Session, Settings } from "./types.ts"
 
-export const SCHEMA = 6
+export const SCHEMA = 7
 export const DATA_KEY = "10ml:data"
 export const LEGACY_KEY = "dix-min-lecture-v1"
 const BACKUP_PREFIX = "10ml:backup:"
@@ -85,6 +85,11 @@ export const migrations: Record<number, Migration> = {
     if (typeof settings.endVibrate !== "boolean") settings.endVibrate = false
     return { ...raw, schemaVersion: 6, settings }
   },
+  6: (raw) => ({
+    ...raw,
+    schemaVersion: 7,
+    readerPrefs: asReaderPrefs(raw.readerPrefs),
+  }),
 }
 
 export function emptyData(): Data {
@@ -106,6 +111,7 @@ export function emptyData(): Data {
       endVibrate: false,
     },
     meta: { lastBackupAt: null, firstSeenAt: null, return7dSent: false },
+    readerPrefs: defaultReaderPrefs(),
   }
 }
 
@@ -177,6 +183,7 @@ export function mergeData(local: Data, incoming: Data): Data {
       ...local.meta,
       lastBackupAt: laterIso(local.meta.lastBackupAt, incoming.meta.lastBackupAt),
     },
+    readerPrefs: local.readerPrefs ?? incoming.readerPrefs ?? defaultReaderPrefs(),
   }
 }
 
@@ -317,6 +324,7 @@ function materialize(raw: Record<string, unknown>): Data {
     return7dSent: metaRaw.return7dSent === true,
   } as Meta
   const challenge = asChallenge(raw.challenge)
+  const readerPrefs = asReaderPrefs(raw.readerPrefs)
   const extra: Record<string, unknown> = {}
   for (const [key, value] of Object.entries(raw)) {
     if (!KNOWN.has(key)) extra[key] = value
@@ -330,6 +338,7 @@ function materialize(raw: Record<string, unknown>): Data {
     currentBookId,
     settings,
     meta,
+    readerPrefs,
     ...(challenge ? { challenge } : {}),
   }
 }
@@ -354,7 +363,7 @@ function asBook(value: unknown): Book | null {
   const total = typeof value.totalPages === "number" && value.totalPages >= 1
     ? Math.floor(value.totalPages)
     : null
-  return {
+  const book: Book = {
     ...value,
     id: value.id,
     title: value.title,
@@ -363,7 +372,45 @@ function asBook(value: unknown): Book | null {
     totalPages: total,
     createdAt: typeof value.createdAt === "string" ? value.createdAt : new Date(0).toISOString(),
     recapCollapsed: value.recapCollapsed === true,
-  } as Book
+  }
+  if (value.source === "feuilleton") book.source = "feuilleton"
+  if (typeof value.slug === "string" && value.slug !== "") book.slug = value.slug
+  const progress = asProgress(value.progress)
+  if (progress) book.progress = progress
+  const read = asEpisodesRead(value.episodesRead)
+  if (read.length > 0) book.episodesRead = read
+  return book
+}
+
+function asProgress(value: unknown): Book["progress"] {
+  if (!isRecord(value)) return undefined
+  if (typeof value.episode !== "number" || !Number.isInteger(value.episode) || value.episode < 1) return undefined
+  if (typeof value.percent !== "number" || !Number.isFinite(value.percent)) return undefined
+  if (typeof value.updatedAt !== "string") return undefined
+  return {
+    episode: value.episode,
+    percent: Math.min(100, Math.max(0, value.percent)),
+    updatedAt: value.updatedAt,
+  }
+}
+
+function asEpisodesRead(value: unknown): number[] {
+  if (!Array.isArray(value)) return []
+  return [...new Set(value.filter((n): n is number => typeof n === "number" && Number.isInteger(n) && n >= 1))].sort((a, b) => a - b)
+}
+
+export function defaultReaderPrefs(): ReaderPrefs {
+  return { fontSize: 3, theme: "clair", lineHeight: "normal" }
+}
+
+export function asReaderPrefs(value: unknown): ReaderPrefs {
+  const record = isRecord(value) ? value : {}
+  const fontSize = record.fontSize === 1 || record.fontSize === 2 || record.fontSize === 3 || record.fontSize === 4 || record.fontSize === 5
+    ? record.fontSize
+    : 3
+  const theme = record.theme === "sepia" || record.theme === "sombre" ? record.theme : "clair"
+  const lineHeight = record.lineHeight === "serre" || record.lineHeight === "aere" ? record.lineHeight : "normal"
+  return { fontSize, theme, lineHeight }
 }
 
 function asSession(value: unknown): Session | null {
@@ -511,6 +558,7 @@ const KNOWN = new Set([
   "meta",
   "currentBookId",
   "challenge",
+  "readerPrefs",
   "version",
   "reminderTime",
   "exportedAt",
