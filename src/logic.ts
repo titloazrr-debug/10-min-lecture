@@ -390,7 +390,7 @@ export function reminderCalendar(time: string, days: number[], now = new Date())
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//10 Min Lecture//FR",
+    "PRODID:-//10 min lecture//FR",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "BEGIN:VEVENT",

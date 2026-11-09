@@ -1,4 +1,4 @@
-# Stockage local — 10 Min Lecture
+# Stockage local — 10 min lecture
 
 Toutes les lectures et écritures passent par `src/storage.ts`. Il n’y a pas de `localStorage.clear()`.
 

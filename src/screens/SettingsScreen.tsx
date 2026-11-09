@@ -101,7 +101,7 @@ export function SettingsScreen({ go }: { go: (route: Route) => void }) {
             />
             <span>Partager des statistiques anonymes</span>
           </label>
-          <p className="hint">Des visites et des durées, jamais tes livres. <a href="/confidentialite">Confidentialité</a></p>
+          <p className="hint">Des visites et des durées, jamais tes livres. <a href="/confidentialite">Confidentialité</a> · <a href="/mentions-legales">Mentions légales</a></p>
           <label className="check-row">
             <input
               type="checkbox"

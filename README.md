@@ -1,4 +1,4 @@
-# 10 Min Lecture
+# 10 min lecture
 
 Petite application pour lire les livres que tu possèdes déjà, en sessions courtes.
 

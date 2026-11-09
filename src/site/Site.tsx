@@ -33,8 +33,12 @@ const pages: Record<string, { title: string; description: string; robots?: strin
     description: "Des livres plein les étagères, et pourtant tu n’arrives plus à t’y mettre ? Quelques idées simples et douces pour retrouver le plaisir de lire, sans pression.",
   },
   "/confidentialite": {
-    title: "Confidentialité",
+    title: "Confidentialité · 10 min lecture",
     description: "On compte des visites, jamais toi. Tes livres et tes notes ne quittent pas ton appareil.",
+  },
+  "/mentions-legales": {
+    title: "Mentions légales · 10 min lecture",
+    description: "Éditeur, hébergeur et informations légales de 10 min lecture.",
   },
   "/defi": {
     title: "Ce soir, 10 minutes de lecture avant d’ouvrir les réseaux",
@@ -67,6 +71,9 @@ export function Site({ path }: { path: string }) {
       if (page) {
         setMeta("property", "og:title", page.title)
         setMeta("property", "og:description", page.description)
+        setMeta("property", "og:image", `${window.location.origin}/og-image.jpg`)
+        setMeta("property", "og:image:width", "1200")
+        setMeta("property", "og:image:height", "630")
       }
     }
     setCanonical(`${window.location.origin}${path}`)
@@ -80,7 +87,7 @@ export function Site({ path }: { path: string }) {
       {showBanner && !reading ? (
         <a className="resume-banner" href="/app">Reprendre ma lecture →</a>
       ) : null}
-      {path === "/" ? <HomePage /> : path === "/histoires" ? <SerialCatalog /> : path === "/decouvrir" || path === "/quiz" ? <QuizPage /> : story?.episode != null ? <SerialReader slug={story.slug} episode={story.episode} /> : story ? <SerialToc slug={story.slug} /> : path === "/defi" ? <DefiPage /> : path === "/reprendre-la-lecture" ? <ReprendreArticle /> : path === "/lire-au-lieu-de-scroller" ? <ScrollArticle /> : path === "/confidentialite" ? <Privacy /> : page ? <SitePage title={page.title} description={page.description} /> : <Missing />}
+      {path === "/" ? <HomePage /> : path === "/histoires" ? <SerialCatalog /> : path === "/decouvrir" || path === "/quiz" ? <QuizPage /> : story?.episode != null ? <SerialReader slug={story.slug} episode={story.episode} /> : story ? <SerialToc slug={story.slug} /> : path === "/defi" ? <DefiPage /> : path === "/reprendre-la-lecture" ? <ReprendreArticle /> : path === "/lire-au-lieu-de-scroller" ? <ScrollArticle /> : path === "/confidentialite" ? <Privacy /> : path === "/mentions-legales" ? <Mentions /> : page ? <SitePage title={page.title} description={page.description} /> : <Missing />}
     </div>
   )
 }
@@ -120,6 +127,7 @@ function HomePage() {
         <h1>Tu voulais lire. Puis tu as ouvert ton téléphone.</h1>
         <p className="site-lede">Ça arrive à tout le monde. 10 min lecture t’aide à rouvrir ton livre, 10 minutes à la fois, et à retrouver où tu en étais.</p>
         <a className="btn btn-primary" href="/app" onClick={() => track("cta_click", { placement: "hero" })}>Reprendre mon livre</a>
+        <p className="home-tagline">Et si tu lisais avant de scroller ?</p>
         <p className="hint">Pour tes livres papier · sans compte · tes lectures restent sur cet appareil</p>
       </section>
       <section className="home-block">
@@ -163,7 +171,7 @@ function HomePage() {
         </a>
         <p><a href="/lire-au-lieu-de-scroller">Le canapé, le trajet, la salle d’attente, le soir.</a></p>
       </section>
-      <p className="footer-note">Tes lectures restent sur cet appareil. Pas de compte, pas de pub. · <a href="/confidentialite">Confidentialité</a> · Fait par Tim</p>
+      <SiteFooter extra />
     </main>
   )
 }
@@ -177,7 +185,7 @@ function DefiPage() {
         <p className="site-lede">Ce soir, avant d’ouvrir les réseaux, lis 10 minutes. Une seule fois, juste pour voir. Demain, on te posera une seule question.</p>
         <a className="btn btn-primary" href="/app" onClick={() => { rememberChallenge(); track("cta_click", { placement: "defi" }) }}>Je relève le défi</a>
       </section>
-      <p className="footer-note">Tes lectures restent sur cet appareil. Pas de compte, pas de pub. · <a href="/confidentialite">Confidentialité</a> · Fait par Tim</p>
+      <SiteFooter extra />
     </main>
   )
 }
@@ -187,7 +195,7 @@ function SitePage({ title, description }: { title: string; description: string }
     <main className="site-main">
       <h1>{title}</h1>
       <p className="site-lede">{description}</p>
-      <p className="footer-note">Tes lectures restent sur cet appareil. <a href="/confidentialite">Confidentialité</a></p>
+      <SiteFooter />
     </main>
   )
 }
@@ -209,7 +217,31 @@ function Privacy() {
         <li>Feuilleton : début ou fin d’un épisode (le slug public et le numéro), ou clic vers la boutique externe.</li>
       </ul>
       <p className="hint">Tu peux couper l’envoi dans l’app : Réglages, « Partager des statistiques anonymes ». Sans outil de mesure configuré, rien ne part.</p>
-      <p className="footer-note">Tes lectures restent sur cet appareil. <a href="/confidentialite">Confidentialité</a></p>
+      <SiteFooter />
+    </main>
+  )
+}
+
+function Mentions() {
+  return (
+    <main className="site-main">
+      <h1>Mentions légales</h1>
+      <p className="site-lede">Cette page décrit ce qui est déjà connu. Elle n’invente pas d’identité, d’adresse ni de numéro d’immatriculation.</p>
+
+      <h2>Le site</h2>
+      <p>10 min lecture — https://10-min-lecture.vercel.app</p>
+
+      <h2>Éditeur</h2>
+      <p>Le site est édité à titre personnel, sans activité commerciale pour le moment. La signature publique est Tim.</p>
+      <p>Le nom civil, l’adresse, le statut juridique et un email de contact seront indiqués ici avant toute commercialisation. Cette page ne les invente pas.</p>
+
+      <h2>Hébergeur</h2>
+      <p>Vercel Inc.<br />440 N Barranca Avenue #4133<br />Covina, CA 91723<br />États-Unis</p>
+      <p><a href="https://vercel.com/help">vercel.com/help</a></p>
+
+      <h2>Données personnelles</h2>
+      <p>Le traitement des visites et des lectures est décrit sur la page <a href="/confidentialite">Confidentialité</a>.</p>
+      <SiteFooter />
     </main>
   )
 }
@@ -220,6 +252,18 @@ function Missing() {
       <h1>Cette page n’existe pas.</h1>
       <p className="site-lede"><a href="/">Retour à l’accueil</a></p>
     </main>
+  )
+}
+
+function SiteFooter({ extra }: { extra?: boolean }) {
+  return (
+    <p className="footer-note">
+      Tes lectures restent sur cet appareil.{extra ? " Pas de compte, pas de pub. · " : " "}
+      <a href="/confidentialite">Confidentialité</a>
+      {" · "}
+      <a href="/mentions-legales">Mentions légales</a>
+      {extra ? " · Fait par Tim" : ""}
+    </p>
   )
 }
 

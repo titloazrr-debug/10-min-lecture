@@ -30,8 +30,8 @@ export function HomeScreen({ go }: { go: (route: Route) => void }) {
     <>
       <header className="topbar">
         <p className="eyebrow">Lire maintenant</p>
-        <h1>10 Min Lecture</h1>
-        <p className="lede">Quelques pages de lecture pour vous détendre.</p>
+        <h1>10 min lecture</h1>
+        <p className="lede">Retrouve le plaisir de lire, 10 minutes à la fois.</p>
       </header>
       <main className="screen">
         <ChallengeCard />

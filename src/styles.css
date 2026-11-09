@@ -103,6 +103,15 @@ a.btn { text-decoration: none; }
 
 .home-hero .btn { margin-top: 8px; }
 
+.home-tagline {
+  margin: 12px 0 0;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--muted);
+}
+
 .home-block { margin-top: 36px; }
 
 .home-block h2 {

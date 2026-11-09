@@ -197,7 +197,9 @@ function useArticleHead(path: string, faqs: Faq[]) {
     document.head.appendChild(script)
 
     setMeta("property", "og:url", `${ORIGIN}${path}`)
-    setMeta("property", "og:image", `${ORIGIN}${PHOTO}`)
+    setMeta("property", "og:image", `${ORIGIN}/og-image.jpg`)
+    setMeta("property", "og:image:width", "1200")
+    setMeta("property", "og:image:height", "630")
     return () => {
       canonical.remove()
       script.remove()

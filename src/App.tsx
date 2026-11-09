@@ -14,14 +14,14 @@ import type { Data, Route } from "./types.ts"
 import { Nav } from "./ui.tsx"
 
 const titles: Record<Route["name"], string> = {
-  home: "10 Min Lecture",
-  books: "Livres · 10 Min Lecture",
-  book: "Livre · 10 Min Lecture",
-  add: "Nouveau livre · 10 Min Lecture",
-  session: "Lecture · 10 Min Lecture",
-  notes: "Notes · 10 Min Lecture",
-  stats: "Statistiques · 10 Min Lecture",
-  settings: "Réglages · 10 Min Lecture",
+  home: "10 min lecture",
+  books: "Livres · 10 min lecture",
+  book: "Livre · 10 min lecture",
+  add: "Nouveau livre · 10 min lecture",
+  session: "Lecture · 10 min lecture",
+  notes: "Notes · 10 min lecture",
+  stats: "Statistiques · 10 min lecture",
+  settings: "Réglages · 10 min lecture",
 }
 
 function Shell() {
